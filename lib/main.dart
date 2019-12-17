@@ -1,8 +1,6 @@
 //On Windows Shift + Alt + F.
 
 import 'package:flutter/material.dart';
-import './widgets/new_transaction.dart';
-import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,8 +39,7 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          NewTransaction(),
-          TransactionList()
+          
         ],
       ),
     );
