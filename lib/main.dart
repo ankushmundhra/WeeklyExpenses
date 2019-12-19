@@ -1,8 +1,8 @@
-//On Windows Shift + Alt + F.
-//To wrap widgets Ctrl + .
 
 import 'package:flutter/material.dart';
-import './widgets/user_transactions.dart';
+import './widgets/transaction_list.dart';
+import './widgets/new_transaction.dart';
+import './models/transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,18 +16,61 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-
+class MyHomePage extends StatefulWidget {
   // String titleInput;
   // String amountInput;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransactions = [
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 99.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Watch',
+      amount: 49.99,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void _addNewTransaction(String txTitle, double txAmount){
+    final newTX = Transaction(
+      title: txTitle,
+      amount: txAmount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
+
+    setState(() {
+      _userTransactions.add(newTX);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx){
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewTransaction(_addNewTransaction);
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context) ,
+          )
+        ],
       ),
       body: SingleChildScrollView(
               child: Column(
@@ -42,10 +85,15 @@ class MyHomePage extends StatelessWidget {
                   elevation: 5,
                 ),
               ),
-              UserTransactions()
+              TransactionList(_userTransactions),
             ],
           ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
+        ),
     );
   }
 }
