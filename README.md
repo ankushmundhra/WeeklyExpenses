@@ -1,3 +1,3 @@
 
-# weeklyExpenses
-A app to manage your weekly expenses.
+# WeeklyExpenses
+An app to manage your weekly expenses.
