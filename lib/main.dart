@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
-import './widgets/chart.dart';
-import './widgets/transaction_list.dart';
+
 import './widgets/new_transaction.dart';
+import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
 
 void main() => runApp(MyApp());
@@ -13,26 +13,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-        fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(
-            title: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-        ),
-        appBarTheme: AppBarTheme(
+          primarySwatch: Colors.purple,
+          accentColor: Colors.amber,
+          // errorColor: Colors.red,
+          fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
-            title: TextStyle(
-              fontFamily: 'OpenSans',
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            )
-          ),
-        ),
-      ),
+                title: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+                button: TextStyle(color: Colors.white),
+              ),
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  title: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+          )),
       home: MyHomePage(),
     );
   }
@@ -50,13 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(
     //   id: 't1',
     //   title: 'New Shoes',
-    //   amount: 99.99,
+    //   amount: 69.99,
     //   date: DateTime.now(),
     // ),
     // Transaction(
     //   id: 't2',
-    //   title: 'New Watch',
-    //   amount: 49.99,
+    //   title: 'Weekly Groceries',
+    //   amount: 16.53,
     //   date: DateTime.now(),
     // ),
   ];
@@ -71,20 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount){
-    final newTX = Transaction(
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
+    final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: chosenDate,
       id: DateTime.now().toString(),
     );
 
     setState(() {
-      _userTransactions.add(newTX);
+      _userTransactions.add(newTx);
     });
   }
 
-  void _startAddNewTransaction(BuildContext ctx){
+  void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
@@ -93,36 +95,45 @@ class _MyHomePageState extends State<MyHomePage> {
           child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
         );
-      }
+      },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expenses'),
+        title: Text(
+          'Personal Expenses',
+        ),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add),
-          onPressed: () => _startAddNewTransaction(context) ,
-          )
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewTransaction(context),
+          ),
         ],
       ),
       body: SingleChildScrollView(
-              child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Chart(_recentTransactions),
-              TransactionList(_userTransactions),
-            ],
-          ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Chart(_recentTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => _startAddNewTransaction(context),
-        ),
+      ),
     );
   }
 }
