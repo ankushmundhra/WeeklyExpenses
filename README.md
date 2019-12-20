@@ -1,6 +1,6 @@
 
 # WeeklyExpenses
-An app to manage your weekly expenses.
+A flutter based app to manage your weekly expenses.
 
 ## Features -
 * Rich and Simle UI.
