@@ -9,4 +9,4 @@ An app to manage your weekly expenses.
 * Ability to delete a item.
 
 ## Screenshots - 
-![1st Screenshots](https://github.com/ankushmundhra/WeeklyExpenses/blob/master/screenshots/1.jpg = 250*250)
+![1st Screenshots](https://github.com/ankushmundhra/WeeklyExpenses/blob/master/screenshots/1.jpg)
