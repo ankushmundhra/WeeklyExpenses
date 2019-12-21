@@ -23,3 +23,5 @@ A flutter based app to manage your weekly expenses.
 * Steps- 
   * flutter config --enable-web
   * flutter run -d chrome
+  
+<img src="https://github.com/ankushmundhra/WeeklyExpenses/blob/master/screenshots/WebApp.png" >
