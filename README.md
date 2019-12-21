@@ -18,3 +18,8 @@ A flutter based app to manage your weekly expenses.
 <img src="https://github.com/ankushmundhra/WeeklyExpenses/blob/master/screenshots/3.jpg" width="250" height="420" hspace="20">
 <img src="https://github.com/ankushmundhra/WeeklyExpenses/blob/master/screenshots/4.jpg" width="250" height="420" hspace="20">
 </p>
+
+## WebApp - 
+* Steps- 
+  * flutter config --enable-web
+  * flutter run -d chrome
